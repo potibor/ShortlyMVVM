@@ -14,7 +14,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_empty_view"
@@ -94,10 +97,10 @@
                 android:background="@{viewModel.isShortenLinkTextEmpty ? @drawable/bordered_red_edittext : @drawable/bordered_edittext}"
                 android:gravity="center"
                 android:hint="@{viewModel.isShortenLinkTextEmpty ? @string/shorten_edittext_error_hint : @string/shorten_edittext_hint}"
-                android:textColorHint="@{viewModel.isShortenLinkTextEmpty ? @color/red : @color/light_gray}"
                 android:singleLine="true"
                 android:text="@{viewModel.shortenLinkText}"
                 android:textColor="@color/black"
+                android:textColorHint="@{viewModel.isShortenLinkTextEmpty ? @color/red : @color/light_gray}"
                 app:layout_constraintBottom_toTopOf="@id/button_shorten_link"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

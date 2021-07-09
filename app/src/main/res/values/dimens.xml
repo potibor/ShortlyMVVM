@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="xxl_padding">24dp</dimen>
+    <dimen name="common_button_height">60dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="xxxxl_padding">48dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+</resources>

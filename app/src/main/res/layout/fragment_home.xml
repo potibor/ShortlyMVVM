@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".scenes.HomeFragment">
 
@@ -15,9 +16,112 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_empty_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:background="@color/off_white"
+            app:layout_constraintBottom_toTopOf="@id/layout_shorten_link_container"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_empty_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8"
+                android:src="@drawable/ic_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_illustration"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_illustration"
+                app:layout_constraintBottom_toTopOf="@id/text_empty_description_title"
+                app:layout_constraintTop_toBottomOf="@id/image_empty_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_empty_description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_lets_get_started"
+                android:textColor="@color/dark_violet"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/text_empty_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_empty_description"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/margin_24"
+                android:gravity="center_horizontal"
+                android:text="@string/text_empty_description"
+                android:textColor="@color/grayish_violet"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_shorten_link_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_violet"
+            android:paddingStart="@dimen/xxl_padding"
+            android:paddingBottom="@dimen/xxxxl_padding"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_shape"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edittext_shorten_link"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_button_height"
+                android:layout_marginTop="@dimen/xxxxl_padding"
+                android:layout_marginEnd="@dimen/xxl_padding"
+                android:background="@{viewModel.isShortenLinkTextEmpty ? @drawable/bordered_red_edittext : @drawable/bordered_edittext}"
+                android:gravity="center"
+                android:hint="@{viewModel.isShortenLinkTextEmpty ? @string/shorten_edittext_error_hint : @string/shorten_edittext_hint}"
+                android:textColorHint="@{viewModel.isShortenLinkTextEmpty ? @color/red : @color/light_gray}"
+                android:singleLine="true"
+                android:text="@{viewModel.shortenLinkText}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@id/button_shorten_link"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_shorten_link"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_button_height"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/xxl_padding"
+                android:background="@drawable/bordered_cyan_button"
+                android:onClick="@{() -> viewModel.onShortenButtonClicked()}"
+                android:text="@string/shorten_button_text"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edittext_shorten_link" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

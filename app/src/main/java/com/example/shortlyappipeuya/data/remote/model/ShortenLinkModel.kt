@@ -11,5 +11,7 @@ data class ShortenLinkResultModel(
     @SerializedName("short_link")
     val shortLink: String,
     @SerializedName("full_short_link")
-    val fullShortLink: String
+    val fullShortLink: String,
+    @SerializedName("original_link")
+    val originalLink: String
 )

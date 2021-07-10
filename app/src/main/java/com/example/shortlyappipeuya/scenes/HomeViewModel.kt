@@ -16,8 +16,9 @@ class HomeViewModel @Inject constructor(
     private val shortenLinkUseCase: ShortenLinkUseCase
 ) : ViewModel() {
 
-    val shortenLinkText = MutableLiveData<String>()
+    val shortenLinkText = MutableLiveData<String?>()
     val isShortenLinkTextEmpty = MutableLiveData<Boolean>()
+    val errorLiveData = MutableLiveData<Boolean>()
 
     fun onShortenButtonClicked() {
         if (shortenLinkText.value?.isNotEmpty() == true) sendLinkToBeShortened()
@@ -31,10 +32,11 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun handleError(failure: Failure) {
-        Log.e("Failure", failure.toString())
+        errorLiveData.value = true
     }
 
     private fun fetchShortenedLinks(model: ShortenLinkModel) {
+        shortenLinkText.value = null
         Log.d("Success", model.toString())
     }
 }

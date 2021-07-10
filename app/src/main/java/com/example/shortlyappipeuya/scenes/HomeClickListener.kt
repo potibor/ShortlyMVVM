@@ -5,4 +5,6 @@ import com.example.shortlyappipeuya.data.local.model.LinkModel
 interface HomeClickListener {
 
     fun linkItemDeleteClicked(model: LinkModel)
+
+    fun copyTextToClipBoard(model: LinkModel)
 }

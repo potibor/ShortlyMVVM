@@ -1,5 +1,8 @@
 package com.example.shortlyappipeuya.scenes
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.example.shortlyappipeuya.R
 import com.example.shortlyappipeuya.databinding.FragmentHomeBinding
@@ -37,13 +40,24 @@ class HomeFragment : Fragment() {
         binding.adapter = homeAdapter
 
         viewModel.fetchShortenedLinks()
+
         observeList()
         observeErrorData()
+        observeCopiedText()
     }
 
     private fun observeList() {
         viewModel.shortenedLinksLiveData.observe(viewLifecycleOwner) { list ->
             homeAdapter.submitList(list)
+            homeAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun observeCopiedText() {
+        viewModel.copyTextToClipBoardLiveData.observe(viewLifecycleOwner) {
+            val clipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("text", it)
+            clipboardManager.setPrimaryClip(clipData)
         }
     }
 

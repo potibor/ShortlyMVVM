@@ -17,5 +17,6 @@ class HomeAdapter(
     ) {
         binding.model = item
         binding.listener = listener
+        binding.executePendingBindings()
     }
 }

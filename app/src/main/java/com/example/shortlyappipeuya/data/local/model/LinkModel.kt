@@ -5,6 +5,7 @@ import java.io.Serializable
 
 data class LinkModel(
     override val id: Int = 0,
-    var shortenedLink: String?,
-    var originalLink: String?
+    val shortenedLink: String?,
+    val originalLink: String?,
+    var isSelected: Boolean = false
 ) : Serializable, ListAdapterItem

@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor(
     val isShortenLinkTextEmpty = MutableLiveData<Boolean>()
     val errorLiveData = MutableLiveData<Boolean>()
     val shortenedLinksLiveData = MutableLiveData<List<LinkModel>>()
-
+    val copyTextToClipBoardLiveData = MutableLiveData<String>()
 
     fun onShortenButtonClicked() {
         if (shortenLinkText.value?.isNotEmpty() == true) sendLinkToBeShortened()
@@ -55,8 +55,21 @@ class HomeViewModel @Inject constructor(
         deleteShortenedLink(model)
     }
 
+    override fun copyTextToClipBoard(model: LinkModel) {
+        val newList: MutableList<LinkModel> = mutableListOf()
+        shortenedLinksLiveData.value?.forEach { linkModel ->
+            linkModel.isSelected = linkModel.id == model.id
+            newList.add(linkModel)
+        }
+
+        shortenedLinksLiveData.value = newList
+        copyTextToClipBoardLiveData.value = model.shortenedLink ?: ""
+    }
+
     private fun deleteShortenedLink(model: LinkModel) = viewModelScope.launch {
         deleteShortenedLinkUseCase.run(DeleteShortenedLinksUseCase.Params(linkModel = model))
             .either(::handleError, ::fetchShortenedLinks)
     }
+
+
 }

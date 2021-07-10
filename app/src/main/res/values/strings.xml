@@ -6,4 +6,5 @@
     <string name="text_lets_get_started">Let\'s get started!</string>
     <string name="text_empty_description">"Paste your first link into \n the field to shorten it"</string>
     <string name="text_link_history">Your link history</string>
+    <string name="copy_button_text">Copy</string>
 </resources>

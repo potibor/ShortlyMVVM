@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shortlyappipeuya.data.local.model.LinkModel
+import com.example.shortlyappipeuya.domain.DeleteShortenedLinksUseCase
 import com.example.shortlyappipeuya.domain.FetchShortenedLinksUseCase
 import com.example.shortlyappipeuya.domain.ShortenLinkUseCase
 import com.example.shortlyappipeuya.util.Failure
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val shortenLinkUseCase: ShortenLinkUseCase,
     private val fetchShortenedLinksUseCase: FetchShortenedLinksUseCase,
+    private val deleteShortenedLinkUseCase: DeleteShortenedLinksUseCase
 ) : ViewModel(), HomeClickListener {
 
     val shortenLinkText = MutableLiveData<String?>()
@@ -50,6 +52,11 @@ class HomeViewModel @Inject constructor(
     }
 
     override fun linkItemDeleteClicked(model: LinkModel) {
-        TODO("Not yet implemented")
+        deleteShortenedLink(model)
+    }
+
+    private fun deleteShortenedLink(model: LinkModel) = viewModelScope.launch {
+        deleteShortenedLinkUseCase.run(DeleteShortenedLinksUseCase.Params(linkModel = model))
+            .either(::handleError, ::fetchShortenedLinks)
     }
 }

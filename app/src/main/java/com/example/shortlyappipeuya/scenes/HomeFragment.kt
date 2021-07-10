@@ -19,6 +19,8 @@ class HomeFragment : Fragment() {
     private val viewModel by viewModels<HomeViewModel>()
     private lateinit var binding: FragmentHomeBinding
 
+    private lateinit var homeAdapter: HomeAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,8 +33,18 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.bind(view)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        homeAdapter = HomeAdapter(viewModel)
+        binding.adapter = homeAdapter
 
+        viewModel.fetchShortenedLinks()
+        observeList()
         observeErrorData()
+    }
+
+    private fun observeList() {
+        viewModel.shortenedLinksLiveData.observe(viewLifecycleOwner) { list ->
+            homeAdapter.submitList(list)
+        }
     }
 
     private fun observeErrorData() {

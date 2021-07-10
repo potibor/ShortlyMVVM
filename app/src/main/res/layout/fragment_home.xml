@@ -6,9 +6,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.shortlyappipeuya.scenes.HomeViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.example.shortlyappipeuya.scenes.HomeAdapter" />
 
     </data>
 
@@ -24,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/off_white"
+            android:visibility="@{viewModel.shortenedLinksLiveData.size() > 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@id/layout_shorten_link_container"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -78,6 +85,7 @@
             android:layout_height="0dp"
             android:background="@color/off_white"
             android:padding="@dimen/margin_24"
+            android:visibility="@{viewModel.shortenedLinksLiveData.size() > 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/layout_shorten_link_container"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -97,6 +105,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/margin_24"
+                app:adapter="@{adapter}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_link_history" />
 

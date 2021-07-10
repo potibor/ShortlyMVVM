@@ -1,24 +1,28 @@
 package com.example.shortlyappipeuya.scenes
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.shortlyappipeuya.data.remote.model.ShortenLinkModel
+import com.example.shortlyappipeuya.data.local.model.LinkModel
+import com.example.shortlyappipeuya.domain.FetchShortenedLinksUseCase
 import com.example.shortlyappipeuya.domain.ShortenLinkUseCase
 import com.example.shortlyappipeuya.util.Failure
+import com.example.shortlyappipeuya.util.UseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val shortenLinkUseCase: ShortenLinkUseCase
-) : ViewModel() {
+    private val shortenLinkUseCase: ShortenLinkUseCase,
+    private val fetchShortenedLinksUseCase: FetchShortenedLinksUseCase,
+) : ViewModel(), HomeClickListener {
 
     val shortenLinkText = MutableLiveData<String?>()
     val isShortenLinkTextEmpty = MutableLiveData<Boolean>()
     val errorLiveData = MutableLiveData<Boolean>()
+    val shortenedLinksLiveData = MutableLiveData<List<LinkModel>>()
+
 
     fun onShortenButtonClicked() {
         if (shortenLinkText.value?.isNotEmpty() == true) sendLinkToBeShortened()
@@ -35,8 +39,17 @@ class HomeViewModel @Inject constructor(
         errorLiveData.value = true
     }
 
-    private fun fetchShortenedLinks(model: ShortenLinkModel) {
+    fun fetchShortenedLinks() = viewModelScope.launch {
         shortenLinkText.value = null
-        Log.d("Success", model.toString())
+        fetchShortenedLinksUseCase.run(UseCase.None)
+            .either(::handleError, ::updateShortenedLinksList)
+    }
+
+    private fun updateShortenedLinksList(shortenedLinks: List<LinkModel>) {
+        shortenedLinksLiveData.value = shortenedLinks
+    }
+
+    override fun linkItemDeleteClicked(model: LinkModel) {
+        TODO("Not yet implemented")
     }
 }

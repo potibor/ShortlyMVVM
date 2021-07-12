@@ -1,53 +1,28 @@
-### Objective
+# ShortlyApp
 
-Using Swift or Kotlin, your challenge is to build out a single page mobile app for URL shortening, integrate with the [shrtcode API](https://app.shrtco.de/docs), and get it looking as close to the design as possible.
+## Architecture
 
-### Brief
+- Single Activity
+- MVVM Pattern
 
-URL shortening is a technique on the Web in which a Uniform Resource Locator (URL) may be made substantially shorter and still direct to the required page. This is achieved by using a redirect that links to the web page that has a long URL. For example, the URL "https://example.com/assets/category_B/subcategory_C/Foo/" can be shortened to "https://example.com/Foo", and the URL "http://example.com/about/index.html" can be shortened to "https://goo.gl/aO3Ssc ".
+**View:** Renders UI and delegates user actions to ViewModel
 
-Your challenge is to build a native iOS or Android app, integrate with the [shrtcode API](https://app.shrtco.de/docs) and get it looking as close to the design as possible. There are plenty of libraries and dependencies availble, feel free to use them. Reactive programming is a plus. In case of iOS, it is recommended to buid UI programatically and not use any storyboard or xib.
+**ViewModel:** Can have simple UI logic but most of the time just gets the data from UseCase
 
-The assignment should take around 4-6 hours ideally but you can spend time as much as you need, we don't evaluate the time.
+**UseCase:** Contains all business rules and they written in the manner of single responsibility principle
 
-Your users should be able to:
+**Repository:** Single source of data. Responsible to get data from one or more data sources
 
--   View the optimal layout for the mobile app depending on their device's screen size
--   Shorten any valid URL
--   See a list of their shortened links ("Link History"). Link History should be persisted ideally.
--   Copy the shortened link to their clipboard in a single click
--   Delete a shortened link from their Link History
--   Receive an error message when the `form` is submitted if:
-    -   The `input` field is empty
+<img width="677" alt="architecture-diagram" src="https://user-images.githubusercontent.com/26321700/107923530-b0593500-6f82-11eb-99bb-312e149f1757.png">
 
-Your task is to build out the project to the designs inside the `/design` folder.
-See the designs in Figma here: https://bit.ly/330dJxN
-See the designs as a video here: https://bit.ly/3eEYboF
+## Tech Stack
 
-You will find all the required assets in the `/images` folder. The assets are already optimized. The designs are in JPG static format. This will mean that you'll need to use your best judgment for styles such as `font-size`, `padding`, and `margin`.
+#### Dependencies
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
-
-### Evaluation Criteria
-
--   Using **Swift** or **Kotlin** best practices. 
--   Show us your work through your commit history
--   We're looking for you to produce working code, with enough room to demonstrate how to structure components in a small program
--   Completeness: did you complete the features?
--   Correctness: does the functionality act in sensible, thought-out ways?
--   Maintainability: is it written in a clean, maintainable way?
--   Testing: is the code adequately tested?
-
-### Deliverables
-
--  Write a README file to demonstrate choices and technical decision you made. Mention target platform version and any setup necessary to build the application.
--  Make sure to include all source code in the repository.
-
-
-### CodeSubmit
-
-Please organize, design, test, and document your code as if it were going into production - then push your changes to the master branch. After you have pushed your code, you may submit the assignment on the assignment page.
-
-**Have fun building!** 🚀
-
-The Apollon Fulfillment GmbH Team
+- **[Navigation Component](https://developer.android.com/jetpack/androidx/releases/navigation):** Consistent navigation between views
+- **[LiveData](https://developer.android.com/topic/libraries/architecture/livedata):** Lifecycle aware observable and data holder
+- **[ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel):** Holds UI data across configuration changes
+- **[Databinding](https://developer.android.com/topic/libraries/data-binding/):** Binds UI components in layouts to data sources
+- **[Coroutines](https://github.com/Kotlin/kotlinx.coroutines):** Asynchronous programming
+- **[Room](https://developer.android.com/topic/libraries/architecture/room):** Object mapping for SQLite
+- **[Hilt](https://github.com/googlecodelabs/android-hilt):** Dependency injector

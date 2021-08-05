@@ -1,8 +1,8 @@
 # ShortlyApp
 
-![Screenshot_1628162130](https://user-images.githubusercontent.com/26321700/128341541-8b6a0a79-1071-4fb0-a4a8-9e16df42b312.png)
+![resize-1628162762777731559Screenshot1628162130](https://user-images.githubusercontent.com/26321700/128342422-beb5b312-fded-4dcb-b4e2-ffe40de7f680.png)
 
-![Screenshot_1628162215](https://user-images.githubusercontent.com/26321700/128341637-f3490574-063a-45c2-98c0-33df001a7c6f.png)
+![resize-1628162830805269836Screenshot1628162215](https://user-images.githubusercontent.com/26321700/128342562-0b02df2b-3fb2-46fc-ac36-db63b2fb535a.png)
 
 ## Architecture
 

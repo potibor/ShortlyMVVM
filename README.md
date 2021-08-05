@@ -1,5 +1,9 @@
 # ShortlyApp
 
+![Screenshot_1628162130](https://user-images.githubusercontent.com/26321700/128341541-8b6a0a79-1071-4fb0-a4a8-9e16df42b312.png)
+
+![Screenshot_1628162215](https://user-images.githubusercontent.com/26321700/128341637-f3490574-063a-45c2-98c0-33df001a7c6f.png)
+
 ## Architecture
 
 - Single Activity

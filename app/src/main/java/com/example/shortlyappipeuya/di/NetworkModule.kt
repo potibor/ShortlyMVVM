@@ -2,13 +2,12 @@ package com.example.shortlyappipeuya.di
 
 import android.app.Application
 import android.content.Context
-import com.example.shortlyappipeuya.data.remote.api.LinkService
+import com.example.shortlyappipeuya.data.remote.api.LinkAPI
 import com.example.shortlyappipeuya.util.Constants
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -26,15 +25,10 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl(Constants.BASE_URL).client(client)
+        return Retrofit.Builder().baseUrl(Constants.Network.BASE_URL).client(client)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
     }
-
-    private val READ_TIMEOUT = 60
-    private val WRITE_TIMEOUT = 60
-    private val CONNECTION_TIMEOUT = 60
-    private val CACHE_SIZE_BYTES = 10 * 1024 * 1024L // 10 MB
 
     @Provides
     @Singleton
@@ -42,15 +36,14 @@ class NetworkModule {
         headerInterceptor: Interceptor,
         cache: Cache
     ): OkHttpClient {
-        val okHttpClientBuilder = OkHttpClient().newBuilder()
-        okHttpClientBuilder.connectTimeout(CONNECTION_TIMEOUT.toLong(), TimeUnit.SECONDS)
-        okHttpClientBuilder.readTimeout(READ_TIMEOUT.toLong(), TimeUnit.SECONDS)
-        okHttpClientBuilder.writeTimeout(WRITE_TIMEOUT.toLong(), TimeUnit.SECONDS)
-        okHttpClientBuilder.cache(cache)
-        okHttpClientBuilder.addInterceptor(headerInterceptor)
-        return okHttpClientBuilder.build()
+        return OkHttpClient().newBuilder().apply {
+            connectTimeout(Constants.Network.CONNECTION_TIMEOUT.toLong(), TimeUnit.SECONDS)
+            readTimeout(Constants.Network.READ_TIMEOUT.toLong(), TimeUnit.SECONDS)
+            writeTimeout(Constants.Network.WRITE_TIMEOUT.toLong(), TimeUnit.SECONDS)
+            cache(cache)
+            addInterceptor(headerInterceptor)
+        }.build()
     }
-
 
     @Provides
     @Singleton
@@ -61,14 +54,12 @@ class NetworkModule {
         }
     }
 
-
     @Provides
     @Singleton
     internal fun provideCache(context: Context): Cache {
         val httpCacheDirectory = File(context.cacheDir.absolutePath, "HttpCache")
-        return Cache(httpCacheDirectory, CACHE_SIZE_BYTES)
+        return Cache(httpCacheDirectory, Constants.Network.CACHE_SIZE_BYTES)
     }
-
 
     @Provides
     @Singleton
@@ -78,7 +69,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit): LinkService {
-        return retrofit.create(LinkService::class.java)
+    fun provideLinkApi(retrofit: Retrofit): LinkAPI {
+        return retrofit.create(LinkAPI::class.java)
     }
 }

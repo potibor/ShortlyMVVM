@@ -13,27 +13,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.example.shortlyappipeuya.R
+import com.example.shortlyappipeuya.base.BaseFragment
 import com.example.shortlyappipeuya.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-
-    private val viewModel by viewModels<HomeViewModel>()
-    private lateinit var binding: FragmentHomeBinding
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(
+    HomeViewModel::class, R.layout.fragment_home
+) {
 
     private lateinit var homeAdapter: HomeAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         homeAdapter = HomeAdapter(viewModel)
@@ -71,13 +63,13 @@ class HomeFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.app_name))
         builder.setMessage(getString(R.string.unknown_error))
-        builder.setPositiveButton(getString(R.string.dialog_yes)) { dialog, which ->
+        builder.setPositiveButton(getString(R.string.dialog_yes)) { _, _ ->
             showToast(getString(R.string.dialog_yes))
         }
-        builder.setNegativeButton(getString(R.string.dialog_no)) { dialog, which ->
+        builder.setNegativeButton(getString(R.string.dialog_no)) { _, _ ->
             showToast(getString(R.string.dialog_no))
         }
-        builder.setNeutralButton(getString(R.string.dialog_maybe)) { dialog, which ->
+        builder.setNeutralButton(getString(R.string.dialog_maybe)) { _, _ ->
             showToast(getString(R.string.dialog_maybe))
         }
         builder.show()
@@ -89,5 +81,4 @@ class HomeFragment : Fragment() {
             toastDescription, Toast.LENGTH_SHORT
         ).show()
     }
-
 }
